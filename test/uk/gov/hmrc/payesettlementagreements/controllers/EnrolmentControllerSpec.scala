@@ -18,10 +18,6 @@ package uk.gov.hmrc.payesettlementagreements.controllers
 
 import play.api.http.Status
 import play.api.test.FakeRequest
-import play.api.http.Status
-import play.api.test.FakeRequest
-import uk.gov.hmrc.play.test.UnitSpec
-import uk.gov.hmrc.play.test.WithFakeApplication
 import uk.gov.hmrc.play.test.{UnitSpec, WithFakeApplication}
 
 
@@ -36,6 +32,4 @@ class EnrolmentControllerSpec extends UnitSpec with WithFakeApplication{
       status(result) shouldBe Status.OK
     }
   }
-
-
 }

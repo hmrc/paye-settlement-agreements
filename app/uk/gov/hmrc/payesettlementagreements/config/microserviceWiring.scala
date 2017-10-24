@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.payesettlementagreements
+package uk.gov.hmrc.payesettlementagreements.config
 
 import uk.gov.hmrc.http._
 import uk.gov.hmrc.http.hooks.HttpHooks
