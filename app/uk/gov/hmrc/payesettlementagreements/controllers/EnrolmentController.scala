@@ -16,20 +16,19 @@
 
 package uk.gov.hmrc.payesettlementagreements.controllers
 
-import play.api.libs.json.JsValue
-import play.api.mvc._
+import javax.inject.Inject
+
+import play.api.mvc.Action
 import uk.gov.hmrc.payesettlementagreements.models.EnrolmentRequest
 import uk.gov.hmrc.play.microservice.controller.BaseController
 
 import scala.concurrent.Future
 
 
-trait EnrolmentController extends BaseController {
-	def enrol(): Action[JsValue] = Action.async(parse.json) { implicit request =>
-		request.body.validate[EnrolmentRequest].fold(_ => Future.successful(BadRequest), _ => Future.successful(Ok))
+class EnrolmentController @Inject()() extends BaseController {
+	def enrol() = Action.async(parse.json) { implicit request =>
+		request.body.validate[EnrolmentRequest].fold(_ => Future.successful(BadRequest("")), _ => Future.successful(Accepted))
 	}
 }
-
-object EnrolmentController extends EnrolmentController
 
 
