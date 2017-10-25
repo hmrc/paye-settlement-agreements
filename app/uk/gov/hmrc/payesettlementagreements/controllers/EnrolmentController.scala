@@ -17,7 +17,6 @@
 package uk.gov.hmrc.payesettlementagreements.controllers
 
 import javax.inject.Inject
-
 import play.api.mvc.Action
 import uk.gov.hmrc.payesettlementagreements.models.EnrolmentRequest
 import uk.gov.hmrc.play.microservice.controller.BaseController
