@@ -27,7 +27,7 @@ import scala.concurrent.Future
 
 class EnrolmentController @Inject()() extends BaseController {
 	def enrol() = Action.async(parse.json) { implicit request =>
-		request.body.validate[EnrolmentRequest].fold(_ => Future.successful(BadRequest("")), _ => Future.successful(Accepted))
+		request.body.validate[EnrolmentRequest].fold(_ => Future.successful(BadRequest), _ => Future.successful(Accepted))
 	}
 }
 
