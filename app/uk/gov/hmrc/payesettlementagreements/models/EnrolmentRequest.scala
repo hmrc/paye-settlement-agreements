@@ -14,22 +14,12 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.payesettlementagreements.controllers
+package uk.gov.hmrc.payesettlementagreements.models
 
-import play.api.libs.json.JsValue
-import play.api.mvc._
-import uk.gov.hmrc.payesettlementagreements.models.EnrolmentRequest
-import uk.gov.hmrc.play.microservice.controller.BaseController
+import play.api.libs.json.Json
 
-import scala.concurrent.Future
+case class EnrolmentRequest(name: String)
 
-
-trait EnrolmentController extends BaseController {
-	def enrol(): Action[JsValue] = Action.async(parse.json) { implicit request =>
-		request.body.validate[EnrolmentRequest].fold(_ => Future.successful(BadRequest), _ => Future.successful(Ok))
-	}
+object EnrolmentRequest {
+  implicit val formats = Json.format[EnrolmentRequest]
 }
-
-object EnrolmentController extends EnrolmentController
-
-

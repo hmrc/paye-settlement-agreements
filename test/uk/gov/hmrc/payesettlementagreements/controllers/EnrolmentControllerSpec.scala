@@ -16,20 +16,35 @@
 
 package uk.gov.hmrc.payesettlementagreements.controllers
 
-import play.api.http.Status
+import org.scalatestplus.play.PlaySpec
+import play.api.libs.json.{JsValue, Json}
+import play.api.mvc.Result
 import play.api.test.FakeRequest
-import uk.gov.hmrc.play.test.{UnitSpec, WithFakeApplication}
+import play.api.test.Helpers._
+import uk.gov.hmrc.play.test.WithFakeApplication
+
+import scala.concurrent.Future
 
 
-class EnrolmentControllerSpec extends UnitSpec with WithFakeApplication{
+class EnrolmentControllerSpec extends PlaySpec with WithFakeApplication {
 
-  val fakeRequest = FakeRequest("GET", "/")
-
-
-  "GET /" should {
-    "return 200" in {
-      val result = EnrolmentController.enrol()(fakeRequest)
-      status(result) shouldBe Status.OK
+  "Enrolment controller" must {
+    "return 200" when {
+      "the enrol endpoint is called with a valid json payload" in {
+        postCall(Json.parse("""{"name":"test"}""")) { result =>
+          status(result) mustBe OK
+        }
+      }
     }
+  }
+
+  object EnrolmentControllerTest extends EnrolmentController {
+  }
+
+  private def postCall(payload: JsValue)(handler: Future[Result] => Any) = {
+    val request: FakeRequest[JsValue] = FakeRequest("POST", "").withBody(payload)
+    val result: Future[Result] = EnrolmentControllerTest.enrol.apply(request)
+
+    handler(result)
   }
 }
