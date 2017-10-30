@@ -14,18 +14,11 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.payesettlementagreements.services
+package uk.gov.hmrc.payesettlementagreements.config
 
-import javax.inject.Inject
+import uk.gov.hmrc.play.config.ServicesConfig
 
-import uk.gov.hmrc.http.HeaderCarrier
-import uk.gov.hmrc.payesettlementagreements.connectors.EnrolmentConnector
-import uk.gov.hmrc.payesettlementagreements.models.{EnrolmentRequest, ReferenceNumber}
-
-import scala.concurrent.Future
-
-class EnrolmentService @Inject()(connector : EnrolmentConnector) {
-  def enrol(request: EnrolmentRequest)(implicit hc: HeaderCarrier) : Future[Either[String,ReferenceNumber]] = {
-    connector.enrol(request)(hc)
-  }
+class ConnectorConfig extends ServicesConfig {
+  lazy val desUrl : String = baseUrl("des")
+  lazy val baseUrl = s"${desUrl}/psa"
 }

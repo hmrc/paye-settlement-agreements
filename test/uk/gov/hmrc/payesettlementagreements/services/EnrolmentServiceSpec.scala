@@ -16,16 +16,33 @@
 
 package uk.gov.hmrc.payesettlementagreements.services
 
-import javax.inject.Inject
-
+import org.mockito.ArgumentMatchers._
+import org.mockito.Mockito._
+import org.scalatest.mockito.MockitoSugar
 import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.payesettlementagreements.connectors.EnrolmentConnector
 import uk.gov.hmrc.payesettlementagreements.models.{EnrolmentRequest, ReferenceNumber}
+import uk.gov.hmrc.play.test.UnitSpec
 
 import scala.concurrent.Future
 
-class EnrolmentService @Inject()(connector : EnrolmentConnector) {
-  def enrol(request: EnrolmentRequest)(implicit hc: HeaderCarrier) : Future[Either[String,ReferenceNumber]] = {
-    connector.enrol(request)(hc)
+class EnrolmentServiceSpec extends UnitSpec with MockitoSugar {
+  "Enrolment Service" must {
+    "return 202 ACCEPTED" when {
+      "the connector return a 200" in {
+        when {
+          enrolmentConnector.enrol(any[EnrolmentRequest])(any[HeaderCarrier])
+        } thenReturn {
+          Future.successful(Right(ReferenceNumber("Test")))
+        }
+
+        val result = enrolmentService.enrol(EnrolmentRequest("Test"))(HeaderCarrier())
+
+        await(result) shouldBe Right(ReferenceNumber("Test"))
+      }
+    }
   }
+
+  val enrolmentConnector = mock[EnrolmentConnector]
+  val enrolmentService = new EnrolmentService(enrolmentConnector)
 }

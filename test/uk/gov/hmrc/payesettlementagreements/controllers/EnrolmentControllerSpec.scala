@@ -27,7 +27,6 @@ import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.payesettlementagreements.models.{EnrolmentRequest, ReferenceNumber}
 import uk.gov.hmrc.payesettlementagreements.services.EnrolmentService
 import uk.gov.hmrc.play.test.UnitSpec
-
 import scala.concurrent.Future
 
 
