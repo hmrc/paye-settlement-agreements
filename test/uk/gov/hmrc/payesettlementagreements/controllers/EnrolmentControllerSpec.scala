@@ -16,15 +16,17 @@
 
 package uk.gov.hmrc.payesettlementagreements.controllers
 
+import org.mockito.ArgumentMatchers._
+import org.mockito.Mockito._
 import org.scalatest.mockito.MockitoSugar
 import play.api.libs.json.{JsValue, Json}
 import play.api.mvc.Result
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
-import uk.gov.hmrc.play.test.UnitSpec
-import org.mockito.Mockito._
-import uk.gov.hmrc.payesettlementagreements.models.ReferenceNumber
+import uk.gov.hmrc.http.HeaderCarrier
+import uk.gov.hmrc.payesettlementagreements.models.{EnrolmentRequest, ReferenceNumber}
 import uk.gov.hmrc.payesettlementagreements.services.EnrolmentService
+import uk.gov.hmrc.play.test.UnitSpec
 
 import scala.concurrent.Future
 
@@ -35,7 +37,7 @@ class EnrolmentControllerSpec extends UnitSpec with MockitoSugar {
     "return ACCEPTED" when {
       "the enrol endpoint is called with a valid json payload" in {
         when {
-          enrolmentService.enrol()
+          enrolmentService.enrol(any[EnrolmentRequest])(any[HeaderCarrier])
         } thenReturn {
           Future.successful(Right(ReferenceNumber("XA234282349")))
         }
@@ -52,6 +54,18 @@ class EnrolmentControllerSpec extends UnitSpec with MockitoSugar {
           status(result) shouldBe BAD_REQUEST
         }
       }
+
+      "the payload is correct but enrolment service returns an error" in {
+        when {
+          enrolmentService.enrol(any[EnrolmentRequest])(any[HeaderCarrier])
+        } thenReturn {
+          Future.successful(Left("Error"))
+        }
+
+        postCall(Json.parse("""{"name":"test"}""")) { result =>
+          status(result) shouldBe BAD_REQUEST
+        }
+      }
     }
   }
 
@@ -60,7 +74,7 @@ class EnrolmentControllerSpec extends UnitSpec with MockitoSugar {
 
   private def postCall(payload: JsValue)(handler: Future[Result] => Any) = {
     val request: FakeRequest[JsValue] = FakeRequest("POST", "").withBody(payload)
-    val result: Future[Result] = new EnrolmentController().enrol.apply(request)
+    val result: Future[Result] = enrolmentController.enrol.apply(request)
 
     handler(result)
   }
