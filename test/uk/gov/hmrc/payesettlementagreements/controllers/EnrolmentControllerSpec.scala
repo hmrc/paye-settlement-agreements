@@ -16,20 +16,30 @@
 
 package uk.gov.hmrc.payesettlementagreements.controllers
 
+import org.scalatest.mockito.MockitoSugar
 import play.api.libs.json.{JsValue, Json}
 import play.api.mvc.Result
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import uk.gov.hmrc.play.test.UnitSpec
+import org.mockito.Mockito._
+import uk.gov.hmrc.payesettlementagreements.models.ReferenceNumber
+import uk.gov.hmrc.payesettlementagreements.services.EnrolmentService
 
 import scala.concurrent.Future
 
 
-class EnrolmentControllerSpec extends UnitSpec {
+class EnrolmentControllerSpec extends UnitSpec with MockitoSugar {
 
   "Enrolment controller" must {
     "return ACCEPTED" when {
       "the enrol endpoint is called with a valid json payload" in {
+        when {
+          enrolmentService.enrol()
+        } thenReturn {
+          Future.successful(Right(ReferenceNumber("XA234282349")))
+        }
+
         postCall(Json.parse("""{"name":"test"}""")) { result =>
           status(result) shouldBe ACCEPTED
         }
@@ -44,6 +54,9 @@ class EnrolmentControllerSpec extends UnitSpec {
       }
     }
   }
+
+  val enrolmentService = mock[EnrolmentService]
+  val enrolmentController = new EnrolmentController(enrolmentService)
 
   private def postCall(payload: JsValue)(handler: Future[Result] => Any) = {
     val request: FakeRequest[JsValue] = FakeRequest("POST", "").withBody(payload)
