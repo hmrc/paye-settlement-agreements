@@ -9,8 +9,6 @@ This is a placeholder README.md for a new repository
 
 ## Enrolment API
 
-API for subscribing to PAYE Settlement Agreements
-
 | PATH | Supported Methods | Description |
 |------|-------------------|-------------|
 |```/paye-settlement-agreements/enrol``` | POST | attempts to subscribe the user to PSA |
