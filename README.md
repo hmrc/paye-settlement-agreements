@@ -1,7 +1,7 @@
 PAYE Settlement Agreements
 ==========================
 
-Microservice for PAYE Settlement Agreements(PSA). This implements the main business logic for PSA, communicating with ETMP(HOD) and Mongo Database for storage/retrieval. The microservice is based on the RESTful API structure, receives and sends data using JSON to either from.
+Microservice for PAYE Settlement Agreements (PSA). This implements the main business logic for PSA, communicating with ETMP(HOD) and Mongo Database for storage/retrieval. The microservice is based on the RESTful API structure, receives and sends data using JSON to either from.
 
 [![Build Status](https://travis-ci.org/hmrc/paye-settlement-agreements.svg?branch=master)](https://travis-ci.org/hmrc/paye-settlement-agreements) [ ![Download](https://api.bintray.com/packages/hmrc/releases/paye-settlement-agreements/images/download.svg) ](https://bintray.com/hmrc/releases/paye-settlement-agreements/_latestVersion)
 
