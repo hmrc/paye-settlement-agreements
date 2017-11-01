@@ -18,8 +18,12 @@ Microservice for PAYE Settlement Agreements (PSA). This implements the main busi
 Install [Service Manager](https://github.com/hmrc/service-manager), then start dependencies:
 
     sm --start PSA_ALL -f
+    
+At this point you will be running from a snapshot, to run PSA locally stop the snapshot:
 
-Start the app:
+    sm --stop PAYE_SETTLEMENT_AGREEMENTS
+
+You can now browse to the root of your application and start the app:
 
     sbt "run 9505"
 
