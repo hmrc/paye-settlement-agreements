@@ -22,7 +22,6 @@ import uk.gov.hmrc.http.{HeaderCarrier, HttpPost, HttpResponse}
 import uk.gov.hmrc.payesettlementagreements.config.ConnectorConfig
 import uk.gov.hmrc.payesettlementagreements.models.{EnrolmentRequest, ReferenceNumber}
 import uk.gov.hmrc.play.config.ServicesConfig
-
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
