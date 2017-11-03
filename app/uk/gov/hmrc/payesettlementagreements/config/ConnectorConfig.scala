@@ -20,5 +20,5 @@ import uk.gov.hmrc.play.config.ServicesConfig
 
 class ConnectorConfig extends ServicesConfig {
   lazy val desUrl : String = baseUrl("des")
-  lazy val baseUrl = s"${desUrl}/psa"
+  lazy val baseUrl = s"${desUrl}/paye-settlement-agreements"
 }
