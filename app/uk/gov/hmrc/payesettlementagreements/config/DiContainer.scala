@@ -16,9 +16,11 @@
 
 package uk.gov.hmrc.payesettlementagreements.config
 
-import uk.gov.hmrc.play.config.ServicesConfig
+import com.google.inject.AbstractModule
+import uk.gov.hmrc.http.HttpPost
 
-class ConnectorConfig extends ServicesConfig {
-  lazy val desUrl : String = baseUrl("des")
-  lazy val baseUrl = s"${desUrl}/paye-settlement-agreements"
+class DiContainer extends AbstractModule {
+  override def configure(): Unit = {
+    bind(classOf[HttpPost]).to(classOf[WebServicesHttp])
+  }
 }

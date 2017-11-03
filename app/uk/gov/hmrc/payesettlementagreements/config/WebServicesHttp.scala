@@ -16,9 +16,4 @@
 
 package uk.gov.hmrc.payesettlementagreements.config
 
-import uk.gov.hmrc.play.config.ServicesConfig
-
-class ConnectorConfig extends ServicesConfig {
-  lazy val desUrl : String = baseUrl("des")
-  lazy val baseUrl = s"${desUrl}/paye-settlement-agreements"
-}
+class WebServicesHttp extends WSHttp

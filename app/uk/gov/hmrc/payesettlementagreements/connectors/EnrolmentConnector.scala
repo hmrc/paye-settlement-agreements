@@ -22,19 +22,17 @@ import uk.gov.hmrc.http.{HeaderCarrier, HttpPost, HttpResponse}
 import uk.gov.hmrc.payesettlementagreements.config.ConnectorConfig
 import uk.gov.hmrc.payesettlementagreements.models.{EnrolmentRequest, ReferenceNumber}
 import uk.gov.hmrc.play.config.ServicesConfig
-
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
 class EnrolmentConnector @Inject()(httpPost: HttpPost, config: ConnectorConfig) extends ServicesConfig {
 
-  def enrol(enrolmentRequest: EnrolmentRequest)(implicit hc: HeaderCarrier) : Future[Either[String,ReferenceNumber]] = {
+  def enrol(enrolmentRequest: EnrolmentRequest)(implicit hc: HeaderCarrier): Future[Either[String, ReferenceNumber]] = {
 
     lazy val uri = s"${config.baseUrl}/enrol"
 
-    val response: Future[HttpResponse] = httpPost.POST[EnrolmentRequest,HttpResponse](uri,enrolmentRequest)
-
-    response.map(f=>
+    val response: Future[HttpResponse] = httpPost.POST[EnrolmentRequest, HttpResponse](uri, enrolmentRequest)
+    response.map(f =>
       f.status match {
         case 200 => {
           Right(f.json.as[ReferenceNumber])
